@@ -1,0 +1,109 @@
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+#from example_dialog import Ui_Dialog
+
+class Ui_MainWindow(object):
+
+    def setupUi(self, MainWindow):
+
+        font = QtGui.QFont()
+        font.setPointSize(28)
+
+        font2 = QtGui.QFont()
+        font2.setPointSize(14)
+
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(400, 400)
+        MainWindow.setMinimumSize(QtCore.QSize(400, 400))
+        MainWindow.setMaximumSize(QtCore.QSize(400, 400))
+
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(100, 60, 211, 81))
+        self.label.setFont(font)
+        self.label.setObjectName("label")
+
+        self.open = QtWidgets.QPushButton(self.centralwidget)
+        self.open.setGeometry(QtCore.QRect(100, 210, 191, 61))
+        self.open.setFont(font2)
+        self.open.setObjectName("open")
+
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 400, 26))
+        self.menubar.setObjectName("menubar")
+
+        MainWindow.setMenuBar(self.menubar)
+
+
+        self.open.clicked.connect(self.edit)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label.setText(_translate("MainWindow", "TextLabel"))
+        self.open.setText(_translate("MainWindow", "Open DialogBox"))
+
+    def edit(self):
+        Dialog = QtWidgets.QDialog()
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        Dialog.exec_()
+
+
+class Ui_Dialog(object):
+
+    def setupUi(self, Dialog):
+
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(300, 130)
+        Dialog.setMinimumSize(QtCore.QSize(300, 130))
+        Dialog.setMaximumSize(QtCore.QSize(300, 130))
+
+
+        self.lineEdit = QtWidgets.QLineEdit(Dialog)
+        self.lineEdit.setGeometry(QtCore.QRect(50, 30, 201, 31))
+        self.lineEdit.setObjectName("lineEdit")
+
+        self.btn_ok = QtWidgets.QPushButton(Dialog)
+        self.btn_ok.setGeometry(QtCore.QRect(50, 80, 93, 28))
+        self.btn_ok.setObjectName("btn_ok")
+
+        self.btn_cancel = QtWidgets.QPushButton(Dialog)
+        self.btn_cancel.setGeometry(QtCore.QRect(160, 80, 93, 28))
+        self.btn_cancel.setObjectName("btn_cancel")
+
+        self.retranslateUi(Dialog)
+
+        self.btn_ok.clicked.connect(Dialog.accept)
+        self.btn_ok.clicked.connect(self.ok_clicked)
+        self.btn_cancel.clicked.connect(Dialog.reject)
+
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def ok_clicked(self):
+        self.user_input = self.lineEdit.text()
+        ui.label.setText(self.user_input)
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.btn_ok.setText(_translate("Dialog", "OK"))
+        self.btn_cancel.setText(_translate("Dialog", "Cancel"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
